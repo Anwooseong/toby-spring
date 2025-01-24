@@ -11,7 +11,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.stream.Collectors;
 
-@Component
 public class WepApiExRateProvider implements ExRateProvider{
 
     @Override
