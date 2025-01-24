@@ -2,6 +2,8 @@ package tobyspring.tobyspring;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import tobyspring.tobyspring.payment.Payment;
+import tobyspring.tobyspring.payment.PaymentService;
 
 import java.io.IOException;
 

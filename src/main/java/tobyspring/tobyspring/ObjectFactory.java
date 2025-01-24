@@ -1,8 +1,11 @@
 package tobyspring.tobyspring;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import tobyspring.tobyspring.exrate.CachedExRateProvider;
+import tobyspring.tobyspring.payment.ExRateProvider;
+import tobyspring.tobyspring.payment.PaymentService;
+import tobyspring.tobyspring.exrate.WepApiExRateProvider;
 
 @Configuration
 public class ObjectFactory {

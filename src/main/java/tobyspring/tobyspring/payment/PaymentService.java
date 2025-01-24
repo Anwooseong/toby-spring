@@ -1,6 +1,4 @@
-package tobyspring.tobyspring;
-
-import org.springframework.stereotype.Component;
+package tobyspring.tobyspring.payment;
 
 import java.io.IOException;
 import java.math.BigDecimal;
