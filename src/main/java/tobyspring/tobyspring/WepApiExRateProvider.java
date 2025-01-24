@@ -10,8 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.stream.Collectors;
 
-public class WepApiExRatePaymentService extends PaymentService {
-    @Override
+public class WepApiExRateProvider {
     BigDecimal getExRate(String currency) throws IOException {
         URL url = new URL("https://open.er-api.com/v6/latest/" + currency);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -21,7 +20,6 @@ public class WepApiExRatePaymentService extends PaymentService {
 
         ObjectMapper mapper = new ObjectMapper();
         ExRateData data = mapper.readValue(response, ExRateData.class);
-        BigDecimal exRate = data.rates().get("KRW");
-        return exRate;
+        return data.rates().get("KRW");
     }
 }
