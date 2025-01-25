@@ -4,14 +4,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import tobyspring.tobyspring.exrate.CachedExRateProvider;
 import tobyspring.tobyspring.payment.ExRateProvider;
+import tobyspring.tobyspring.payment.ExRateProviderStub;
 import tobyspring.tobyspring.payment.PaymentService;
-import tobyspring.tobyspring.exrate.WepApiExRateProvider;
+
+import java.math.BigDecimal;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
 
 @Configuration
-public class ObjectFactory {
+public class TestPaymentConfig {
     @Bean
     public PaymentService paymentService() {
-        return new PaymentService(cachedExRateProvider());
+        return new PaymentService(exRateProvider(), clock());
     }
 
     @Bean
@@ -21,6 +26,11 @@ public class ObjectFactory {
 
     @Bean
     public ExRateProvider exRateProvider() {
-        return new WepApiExRateProvider();
+        return new ExRateProviderStub(BigDecimal.valueOf(1_000));
+    }
+
+    @Bean
+    public Clock clock() {
+        return Clock.fixed(Instant.now(), ZoneId.systemDefault());
     }
 }
