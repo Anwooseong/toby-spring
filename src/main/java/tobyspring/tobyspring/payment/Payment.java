@@ -1,8 +1,12 @@
 package tobyspring.tobyspring.payment;
 
+import lombok.Getter;
+
 import java.math.BigDecimal;
+import java.time.Clock;
 import java.time.LocalDateTime;
 
+@Getter
 public class Payment {
     private Long orderId;
     private String currency;
@@ -20,28 +24,15 @@ public class Payment {
         this.validUntil = validUntil;
     }
 
-    public Long getOrderId() {
-        return orderId;
+    public static Payment createPrepared(Long orderId, String currency, BigDecimal foreignCurrencyAmount, BigDecimal exRate, LocalDateTime now) {
+        BigDecimal convertedAmount = foreignCurrencyAmount.multiply(exRate);
+        LocalDateTime validUntil = now.plusMinutes(30);
+
+        return new Payment(orderId, currency, foreignCurrencyAmount, exRate, convertedAmount, validUntil);
     }
 
-    public String getCurrency() {
-        return currency;
-    }
-
-    public BigDecimal getForeignCurrencyAmount() {
-        return foreignCurrencyAmount;
-    }
-
-    public BigDecimal getExRate() {
-        return exRate;
-    }
-
-    public BigDecimal getConvertedAmount() {
-        return convertedAmount;
-    }
-
-    public LocalDateTime getValidUntil() {
-        return validUntil;
+    public boolean isValid(Clock clock) {
+        return LocalDateTime.now(clock).isBefore(this.validUntil);
     }
 
     @Override
