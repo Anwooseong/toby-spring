@@ -8,7 +8,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import tobyspring.tobyspring.TestPaymentConfig;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.LocalDateTime;
@@ -30,7 +29,7 @@ class PaymentServiceSpringTest {
     Clock clock;
 
     @Test
-    void convertedAmount() throws IOException {
+    void convertedAmount() {
         // given
         // when
         // exRate: 1000
@@ -49,7 +48,7 @@ class PaymentServiceSpringTest {
     }
 
     @Test
-    void validUntil() throws IOException {
+    void validUntil() {
         // given
         // when
         Payment payment = paymentService.prepare(1L, "USD", BigDecimal.TEN);

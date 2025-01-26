@@ -5,11 +5,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import tobyspring.tobyspring.payment.Payment;
 import tobyspring.tobyspring.payment.PaymentService;
 
-import java.io.IOException;
-
 public class Client {
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) {
         BeanFactory beanFactory = new AnnotationConfigApplicationContext(PaymentConfig.class);
         PaymentService paymentService = beanFactory.getBean(PaymentService.class);
 
