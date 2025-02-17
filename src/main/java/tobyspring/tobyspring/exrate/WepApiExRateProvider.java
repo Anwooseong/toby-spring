@@ -2,6 +2,8 @@ package tobyspring.tobyspring.exrate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import tobyspring.tobyspring.api.ApiExecutor;
+import tobyspring.tobyspring.api.SimpleApiExecutor;
 import tobyspring.tobyspring.payment.ExRateProvider;
 
 import java.io.BufferedReader;
@@ -18,10 +20,10 @@ public class WepApiExRateProvider implements ExRateProvider {
     @Override
     public BigDecimal getExRate(String currency) {
         String url = "https://open.er-api.com/v6/latest/" + currency;
-        return runApiForExRate(url);
+        return runApiForExRate(url, new SimpleApiExecutor());
     }
 
-    private static BigDecimal runApiForExRate(String url) {
+    private static BigDecimal runApiForExRate(String url, ApiExecutor apiExecutor) {
         URI uri;
         try {
             uri = new URI(url);
@@ -31,7 +33,7 @@ public class WepApiExRateProvider implements ExRateProvider {
 
         String response;
         try {
-            response = executeApi(uri);
+            response = apiExecutor.execute(uri);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -49,12 +51,4 @@ public class WepApiExRateProvider implements ExRateProvider {
         return data.rates().get("KRW");
     }
 
-    private static String executeApi(URI uri) throws IOException {
-        String response;
-        HttpURLConnection connection = (HttpURLConnection) uri.toURL().openConnection();
-        try (BufferedReader bf = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-            response = bf.lines().collect(Collectors.joining());
-        }
-        return response;
-    }
 }
